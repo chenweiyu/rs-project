@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhm.rs.dao.StaffInfoDao">
+     <!-- 多表分页条件 ：复杂查询   resultType="map"   #{map.name} 取变量值  map.query != null and  -->
+     <select id="getListPage" resultType="map">
+       select  a.staff_id, a.staff_name, a.sex, b.position_name, a.staff_phone, c.section_name, a.into_time, b.position_num from staff a, position b, section c  where a.position_id = b.id and a.section_id = c.id 
+       <if test="map.query!=''">
+        and a.staff_name like concat('%',#{map.query},'%')
+       </if>
+     </select>
+
+     <select id="getNewStaffListPage" resultType="map">
+       select s.*, p.position_name, se.section_name from ontrial o, staff s, position p, section se where o.staff_id=s.staff_id and o.status='正常' and s.position_id = p.id and se.id = s.section_id and 
+       <if test="map.OntrialBeginTime!=''">
+        s.into_time &gt;= #{map.OntrialBeginTime} and s.into_time &lt;= #{map.OntrialEndTime}
+       </if>
+     </select>
+
+     <select id="getXlList" resultType="map">
+       select count(*) value, s.highest_education name from staff s group by s.highest_education
+     </select>
+  
+</mapper>

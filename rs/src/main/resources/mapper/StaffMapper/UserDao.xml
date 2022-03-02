@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhm.rs.dao.UserDao">
+
+
+
+
+
+     <!-- 多表分页条件 ：复杂查询   resultType="map"   #{map.name} 取变量值   -->
+     <select id="daoQ1" resultType="map">
+       select  a.name,a.email,b.title,b.description,b.created 
+       from  sys_user a,m_blog b where a.id=b.user_id 
+       <if test="map.name != null and map.name!=''">
+        and a.name like concat('%',#{map.name},'%')
+       </if>
+     </select>
+  
+</mapper>

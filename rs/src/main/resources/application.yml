@@ -1,0 +1,113 @@
+#总配置文件
+#1.Tomcat  端口
+server:
+  port: 9004
+
+
+  
+spring:
+   #2数据库
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rs?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 190712
+    initial-size: 10
+    max-active: 100
+    min-idle: 10
+    max-wait: 60000
+    pool-prepared-statements: true
+    max-pool-prepared-statement-per-connection-size: 20
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 300000
+    #validation-query: SELECT 1 FROM DUAL
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false   
+    filter:
+      stat:
+        log-slow-sql: true
+        slow-sql-millis: 1000
+        merge-sql: false
+      wall:
+        config:
+          multi-statement-allow: true
+
+
+ 
+ 
+ 
+        
+ 
+  
+  # #2.2json     ????
+  # jackson:
+  #   date-format: yyyy-MM-dd HH:mm:ss
+  #   time-zone: GMT+8
+    
+        
+ 
+      
+                
+
+#3.mybatisplus配置 ORM   
+#配置文件 https://mp.baomidou.com/config/    
+mybatis-plus:
+  #MyBatis 配置文件位置，如果您有单独的 MyBatis 配置，请将其路径配置到 configLocation
+  #config-location:
+  
+  #xml映射文件路径,如果您在 Mapper 中有自定义方法(XML 中有自定义实现)，需要进行该配置，告诉 Mapper 所对应的 XML 文件位置
+  mapper-locations: classpath*:mapper/**/*.xml     #要写全
+    #实体扫描，多个package用逗号或者分号分隔MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，而不用使用全限定的类名(即 XML 中调用的时候不用包含包名)
+  typeAliasesPackage: com.xhm.rs.entity
+
+
+   #1.全局配置 ：MyBatis-Plus 全局策略配置，这里是mybatis-plus的
+  global-config:
+    #2.MP的数据库相关配置
+    db-config:
+             #生成ID类型枚举类
+      id-type: AUTO
+            #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: 2
+           #驼峰下划线转换
+      db-column-underline: true
+          #刷新mapper 调试神器，自动刷新xml文件
+      refresh-mapper: true
+          #数据库大写下划线转换
+    #capital-mode: true
+         #逻辑删除配置 ,逻辑删除值,(逻辑删除下有效)
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+     
+  #3.原生 MyBatis 所支持的配置 ,一级缓存：默认情况下Myabtis对于同一个SqlSession开启一级缓存，默认关闭二级缓存
+  configuration:
+        #是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN（下划线命名） 到经典 Java 属性名 aColumn（驼峰命名） 的类似映射。
+    map-underscore-to-camel-case: true
+    cache-enabled: false      #关闭二级缓存
+       #指定当结果集中值为 null 的时候是否调用映射对象的 Setter（Map 对象时为 put）方法，字段值为null时也显示
+    call-setters-on-nulls: true
+   
+ 
+ #4.日志    
+logging:
+  level:
+     com.jd.after.modules.mis.dao: debug    #开启显示 sql 
+  pattern:
+     console: '%p%m%n'    
+
+
+
+#5.打开监控actuator        访问地址 http://localhost:9000/actuator
+management:    
+  server:
+    port: 9002
+    address: "127.0.0.1"
+  endpoints:
+    web:
+      exposure:
+        include: "*"     
+   
+ 
+

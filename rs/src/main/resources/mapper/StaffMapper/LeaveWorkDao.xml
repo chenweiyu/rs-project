@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhm.rs.dao.LeaveWorkDao">
+     <select id="pageAllLeave" resultType="map">
+       select s.staff_id, s.staff_name, se.section_name, p.position_name, l.leave_type, l.remark, l.leave_time, l.leave_go, l.is_into from staff s, position p, section se, leave_staff l where s.staff_id = l.staff_id and s.position_id = p.id and s.section_id = se.id
+     </select>
+
+     <select id="getLeaveStaffListPage" resultType="map">
+       select * from leave_staff l where
+       <if test="map.OntrialBeginTime!=''">
+        l.leave_time &gt;= #{map.OntrialBeginTime} and l.leave_time &lt;= #{map.OntrialEndTime}
+       </if>
+     </select>
+  
+</mapper>

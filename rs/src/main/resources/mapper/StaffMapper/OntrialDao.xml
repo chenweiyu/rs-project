@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhm.rs.dao.OntrialDao">
+     <select id="pageAll" resultType="map">
+       SELECT s.staff_id, s.staff_name, p.position_name, se.section_name, o.status, o.begin_time, o.end_time FROM staff s, ontrial o, position p, section se 
+       <if test="map.query!=''">
+        where s.position_id = p.id and s.section_id = se.id and o.staff_id = s.staff_id and s.staff_id like concat('%',#{map.query},'%')
+       </if>
+       <if test="map.query==''">
+        where s.position_id = p.id and s.section_id = se.id and o.staff_id = s.staff_id
+       </if>
+     </select>
+
+  
+</mapper>

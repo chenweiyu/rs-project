@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhm.rs.dao.TransferSectionDao">
+     <select id="pageAllTransfer" resultType="map">
+       select s.staff_id, s.staff_name, t.* from staff s, transfer_section t where s.staff_id = t.staff_id
+     </select>
+
+     <select id="getTransferSectionPage" resultType="map">
+       select t.section_name, t.section_after, t.begin_time, t.reason, s.staff_name, s.sex from transfer_section t, staff s where s.staff_id = t.staff_id and 
+       <if test="map.OntrialBeginTime!=''">
+        t.begin_time &gt;= #{map.OntrialBeginTime} and t.begin_time &lt;= #{map.OntrialEndTime}
+       </if>
+     </select>
+  
+</mapper>

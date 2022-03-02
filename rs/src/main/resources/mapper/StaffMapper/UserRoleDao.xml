@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhm.rs.dao.UserRoleDao">
+
+
+
+
+  <!-- 根据用户ID，查询拥有的所有角色 -->
+  <select  id="getRoleByUserId" resultType="Role">
+     SELECT b.* FROM sys_user_role a,sys_role b where a.role_id=b.id and a.user_id=#{userId}
+  </select>
+
+
+    <!-- 根据角色ID，查询分配到的所有用户 -->
+  <select  id="getUserByRoleId" resultType="User">
+     SELECT b.* FROM sys_user_role a,sys_user b where a.user_id=b.id and a.role_id=#{roleId}
+  </select>
+
+
+</mapper>
